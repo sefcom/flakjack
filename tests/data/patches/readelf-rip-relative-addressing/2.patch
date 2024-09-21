@@ -1,0 +1,57 @@
+
+            push rcx    ; clobbered by syscall instruction
+            push r11    ; clobbered by syscall instruction
+            push rdx
+            push rsi
+            push rdi
+            push rax
+            ; save mem address value on stack
+            lea rsi, [rbp + rbx * 1-1]
+            push rsi
+            ; open("/dev/random", O_WRONLY)
+            mov esi, 0x6d6f64
+            push rsi
+            mov rsi, 0x6e61722f7665642f
+            push rsi
+            xor edx, edx
+            mov esi, 1
+            mov rdi, rsp
+            mov eax, 2
+            add rsp, 16
+            syscall
+            pop rsi
+            push rax
+            ; write(<fd>, <addr>, <size>)
+            mov rdx, 1
+            mov rdi, rax
+            mov eax, 1
+            syscall
+            ; close(<fd>)
+            pop rdi
+            push rax
+            mov eax, 3
+            syscall
+            ; if write failed, patch
+            pop rax
+            cmp eax, 0
+            jge nopatch
+            mov rbp, 0x2c485f
+            
+                mov rbx, 0
+                pop rax
+pop rdi
+pop rsi
+pop rdx
+pop r11
+pop rcx
+
+            jmp done
+            nopatch:
+            pop rax
+            pop rdi
+            pop rsi
+            pop rdx
+            pop r11
+            pop rcx
+            done:
+            

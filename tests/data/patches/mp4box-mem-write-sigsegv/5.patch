@@ -1,0 +1,54 @@
+
+            ; patch_type = sigsegv_mem_addr
+            push rcx    ; clobbered by syscall instruction
+            push r11    ; clobbered by syscall instruction
+            push rdx
+            push rsi
+            push rdi
+            push rax
+            ; save mem address value on stack
+            lea rsi, [r15]
+            push rsi
+            ; open("/tmp/fj", O_CREAT | O_WRONLY)
+            mov rsi, 0x6a662f706d742f
+            push rsi
+            xor edx, edx
+            mov esi, 65
+            mov rdi, rsp
+            mov eax, 2
+            add rsp, 8
+            syscall
+            pop rsi
+            push rax
+            ; write(<fd>, <addr>, <size>)
+            mov rdx, 8
+            mov rdi, rax
+            mov eax, 1
+            syscall
+            ; close(<fd>)
+            pop rdi
+            push rax
+            mov eax, 3
+            syscall
+            ; if `size` bytes written, do not patch
+            pop rax
+            cmp eax, 8
+            je nopatch
+            mov r15, 0xab20bf
+            pop rax
+pop rdi
+pop rsi
+pop rdx
+pop r11
+pop rcx
+
+            jmp done
+            nopatch:
+            pop rax
+            pop rdi
+            pop rsi
+            pop rdx
+            pop r11
+            pop rcx
+            done:
+            

@@ -1,0 +1,7 @@
+
+        ; patch_type = sigsegv_ret_entry
+        push rdi
+        mov rdi, [rsp + 8]
+        mov [117440512], rdi
+        pop rdi
+        

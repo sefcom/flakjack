@@ -1,0 +1,30 @@
+
+            ; patch_type = sigsegv_strchr
+            push rcx    ; clobbered by syscall instruction
+            push r11    ; clobbered by syscall instruction
+            push rdx
+            push rsi
+            push rax
+            push rdi
+            ; madvise(<address of page with string>, <page_size>, MADV_NORMAL)
+            mov rdx, 4095
+            not rdx
+            and rdi, rdx
+            mov rsi, 4096
+            mov rdx, 0
+            mov rax, 28
+            syscall
+            cmp eax, 0
+            jge nopatch
+            mov rdi, 2358969
+            add rsp, 8
+            jmp done
+            nopatch:
+                pop rdi
+            done:
+                pop rax
+                pop rsi
+                pop rdx
+                pop r11
+                pop rcx
+            

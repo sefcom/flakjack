@@ -1,0 +1,6 @@
+
+            cmp byte  [rsp + 0x18], 0
+            jne label1
+            mov byte  [rsp + 0x18], 63
+            label1:
+            

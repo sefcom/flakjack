@@ -1,0 +1,6 @@
+
+            cmp cl, 0
+            jne label1
+            mov cl, 36
+            label1:
+            

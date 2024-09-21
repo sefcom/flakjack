@@ -1,0 +1,2 @@
+class GDBSocketNotFoundException(Exception):
+    pass
