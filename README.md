@@ -6,7 +6,13 @@ Vulnerabilities, refer to [our paper](https://sefcom.asu.edu/publications/flakja
 
 ## Installation
 
-The easiest way to run FlakJack is to build a Docker image:
+The easiest way to run FlakJack is to use the pre-built Docker image:
+
+```bash
+docker pull ghcr.io/sefcom/flakjack:public
+```
+
+Alternatively, build a Docker image using repo:
 
 ```bash
 docker build -t flakjack .
@@ -29,7 +35,7 @@ If you use FlakJack, we would be grateful if you could cite our work use the fol
 @inproceedings{flakjack,
   author = {Arvind S Raj and Wil Gibbs and Fangzhou Dong and Jayakrishna Menon Vadayath and Michael Tompkins and
             Steven Wirsz and Yibo Liu and Zhenghao Hu and Chang Zhu and Gokulkrishna Praveen Menon and
-            Brendan Dolan-Gavitt and Adam Doup{\'e} and Ruoyu Wang and Yan Shoshitaishvili  and Tiffany Bao},
+            Brendan Dolan-Gavitt and Adam Doup{\'e} and Ruoyu Wang and Yan Shoshitaishvili and Tiffany Bao},
   title = {\emph{Fuzz to the Future:} {Uncovering Occluded Future Vulnerabilities via Robust Fuzzing}},
   booktitle = {Proceedings of the 2024 ACM SIGSAC Conference on Computer and Communications Security (CCS '24)},
   year = {2024}
